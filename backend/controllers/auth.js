@@ -1,11 +1,15 @@
-const User = require('../models/user')
-const shortId = require('shortid')
-const jwt = require('jsonwebtoken')
-const expressJwt = require('express-jwt')
-const user = require('../models/user')
+const User = require('../models/user');
+const shortId = require('shortid');
+const expressJwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
+const user = require('../models/user');
+
+require('dotenv').config()
+
+const { expressjwt } = expressJwt
 
 exports.signup = (req, res) => {
-
+    console.log('~ process.env.JWT_SECRET', process.env.JWT_SECRET)
     const { name, email, password } = req.body
 
     User.findOne({ email })
@@ -71,3 +75,14 @@ exports.signin = (req, res) => {
 
 
 }
+
+exports.signout = (_req, res) => {
+    res.clearCookie('token')
+    res.json({ message: 'Signout success' })
+}
+
+exports.requireSignin = expressjwt({
+    secret: process.env.JWT_SECRET,
+    algorithms: ["HS256"],
+    userProperty: "auth"
+});
