@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    salt: Number,
+    salt: String,
     about: {
         type: String,
     },
@@ -74,9 +74,10 @@ userSchema.methods = {
         try {
             return crypto
                 .createHmac('sha1', this.salt)
-                .update(password)
+                .update(`${password}`)
                 .digest('hex')
         } catch (err) {
+            console.error('~ err', err)
             return ''
         }
     },
