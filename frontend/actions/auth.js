@@ -7,15 +7,10 @@ export const signup = (user) => {
         method: 'post',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'http://localhost:3000',
-            'Access-Control-Allow-Credentials': 'true',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
     })
-        .then((response) => {
-            console.log('~ response.json()', response.json())
-            return response.json()
-        })
-        .catch((err) => console.log(err))
+        .then((response) => response.json())
+        .catch((err) => console.error(err))
 }

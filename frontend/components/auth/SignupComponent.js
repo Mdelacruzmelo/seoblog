@@ -14,23 +14,13 @@ const SignupComponent = () => {
     })
 
     const { name, email, password, error, loading, message, showForm } = values
-
     const handleSubmit = (e) => {
-
         e.preventDefault();
-
-        // console.table({ name, email, password, error, loading, message, showForm });
         setValues({ ...values, error: false, loading: true })
-
         signup({ name, email, password })
             .then((data) => {
-                console.log('~ data', data)
-                if (!data || data?.error) {
-                    setValues({
-                        ...values,
-                        error,
-                        loading: false
-                    })
+                if (data?.error) {
+                    setValues({ ...values, error, loading: false })
                 } else {
                     setValues({
                         ...values,
@@ -44,14 +34,13 @@ const SignupComponent = () => {
                     })
                 }
             })
-
     }
-
     const handleChange = name => e => {
-        console.log('handle change to value: ' + e.target.value);
         setValues({ ...values, [name]: e.target.value })
     }
-
+    const showLoading = () => (loading ? <div className="aler alert-info">Loading...</div> : '')
+    const showError = () => (error ? <div className="aler alert-danger">{error}</div> : '')
+    const showMessage = () => (message ? <div className="aler alert-info">{message}</div> : '')
     const signupForm = () => {
         return (
             <form onSubmit={handleSubmit}>
@@ -90,7 +79,10 @@ const SignupComponent = () => {
 
     return (
         <>
-            {signupForm()}
+            {showError()}
+            {showLoading()}
+            {showMessage()}
+            {showForm && signupForm()}
         </>
     );
 }
