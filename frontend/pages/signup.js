@@ -11,6 +11,12 @@ const Signup = () => {
                 <div className="col-md-6 offset-md-3">
                     <SignupComponent />
                 </div>
+                <div className="col-md-6 offset-md-3">
+                    Are you a user?
+                    <Link href="/signin">
+                        <a>Signin</a>
+                    </Link>
+                </div>
             </div>
         </Layout>
     );
