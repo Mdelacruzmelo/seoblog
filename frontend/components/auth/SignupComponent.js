@@ -20,7 +20,7 @@ const SignupComponent = () => {
         signup({ name, email, password })
             .then((data) => {
                 if (data?.error) {
-                    setValues({ ...values, error, loading: false })
+                    setValues({ ...values, error: data?.error, loading: false })
                 } else {
                     setValues({
                         ...values,
