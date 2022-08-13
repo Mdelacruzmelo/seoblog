@@ -9,7 +9,6 @@ require('dotenv').config()
 const { expressjwt } = expressJwt
 
 exports.signup = (req, res) => {
-    console.log('~ process.env.JWT_SECRET', process.env.JWT_SECRET)
     const { name, email, password } = req.body
 
     User.findOne({ email })
