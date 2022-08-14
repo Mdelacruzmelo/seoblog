@@ -23,7 +23,6 @@ const SigninComponent = () => {
         setValues({ ...values, error: false, loading: true })
         signin({ email, password })
             .then((data) => {
-                console.log('~ data', data)
                 if (!data) {
                     setValues({ ...values, error: 'Could not create a user', loading: false })
                 } else if (data?.error) {
