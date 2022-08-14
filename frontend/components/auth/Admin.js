@@ -14,7 +14,6 @@ const Admin = ({ children }) => {
 
     return (
         <>
-            <span>Admin</span>
             {children}
         </>
     );

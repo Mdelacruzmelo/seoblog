@@ -38,7 +38,8 @@ export const signin = (user) => {
 
 // Signout
 export const signout = (next) => {
-    deleteCookie('token')
+    // deleteCookie('token')
+    removeLocalStorage('token')
     removeLocalStorage('user')
     next()
 
@@ -60,22 +61,25 @@ export const removeLocalStorage = (key) => {
     localStorage.removeItem(key)
 }
 
-// Autehnticate user by pass data to cookie and localstorage
+// Authenticate
 export const authenticate = (data, next) => {
-    setCookie('token', data.token)
+    // setCookie('token', data.token)
+    setLocalStorage('token', data.token)
     setLocalStorage('user', data.user)
     if (next) next()
     else console.error("No next method given")
 }
 
 export const isAuth = () => {
-    if (typeof window === 'object') {
-        if (hasCookie('token')) {
+    if (typeof window !== 'undefined') {
+        // if (hasCookie('token')) {
+        if (localStorage.getItem('token')) {
             if (localStorage.getItem('user')) {
                 return JSON.parse(localStorage.getItem('user'))
             } else {
                 return false
             }
         }
+        // }
     }
 }

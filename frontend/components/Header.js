@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import nProgress from 'nprogress';
@@ -12,6 +12,12 @@ import { APP_NAME } from '../config'
 import { signout, isAuth } from '../actions/auth'
 
 const Header = () => {
+
+    const [authenticated, setAuthenticated] = useState()
+
+    useEffect(() => {
+        setAuthenticated(isAuth())
+    }, [])
 
     const router = useRouter()
 
@@ -37,47 +43,46 @@ const Header = () => {
                 </Link>
                 <Nav className="me-auto">
 
-                    <NavItem style={isAuth() ? styleHidden : { cursor: 'pointer' }}>
-                        <Link href="/signin"><NavLink>Signin</NavLink></Link>
-                    </NavItem>
+                    {!authenticated && (
+                        <>
+                            <NavItem style={{ cursor: 'pointer' }}>
+                                <Link href="/signin"><NavLink>Signin</NavLink></Link>
+                            </NavItem>
+                            <NavItem style={{ cursor: 'pointer' }}>
+                                <Link href="/signup"><NavLink>Signup</NavLink></Link>
+                            </NavItem>
+                        </>
+                    )}
 
-                    <NavItem style={isAuth() ? styleHidden : { cursor: 'pointer' }}>
-                        <Link href="/signup"><NavLink>Signup</NavLink></Link>
-                    </NavItem>
+                    {authenticated && authenticated.role === 1 && (
+                        <NavItem>
+                            <Link href="/admin">
+                                <NavLink>{`${authenticated?.name}'s Dashboard`}</NavLink>
+                            </Link>
+                        </NavItem>
+                    )}
 
-                    <NavItem style={
-                        !isAuth()
-                            ? styleHidden
-                            : isAuth() && isAuth().role === 1
-                                ? styleHidden
-                                : { cursor: 'pointer' }}>
-                        <Link href="/user">
-                            <NavLink>{`${isAuth()?.name}'s Dashboard`}</NavLink>
-                        </Link>
-                    </NavItem>
+                    {authenticated && authenticated.role === 0 && (
+                        <NavItem>
+                            <Link href="/user">
+                                <NavLink>{`${authenticated?.name}'s Dashboard`}</NavLink>
+                            </Link>
+                        </NavItem>
+                    )}
 
-                    <NavItem style={
-                        !isAuth()
-                            ? styleHidden
-                            : isAuth() && isAuth().role === 0
-                                ? styleHidden
-                                : { cursor: 'pointer' }}>
-                        <Link href="/admin">
-                            <NavLink>{`${isAuth()?.name}'s Dashboard`}</NavLink>
-                        </Link>
-                    </NavItem>
-
-                    <NavItem style={!isAuth() ? styleHidden : {}}>
-                        <NavLink
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => { signout(() => router.replace(`/signin`)) }}>
-                            Signout
-                        </NavLink>
-                    </NavItem>
+                    {authenticated && (
+                        <NavItem>
+                            <NavLink
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => { signout(() => router.replace(`/signin`)) }}>
+                                Signout
+                            </NavLink>
+                        </NavItem>
+                    )}
 
                 </Nav>
             </Navbar>
-        </div>
+        </div >
     );
 }
 

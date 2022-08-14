@@ -10,8 +10,8 @@ const SigninComponent = () => {
     }, [])
 
     const [values, setValues] = useState({
-        email: 'mdela2@gmail.com',
-        password: '123456789Mar',
+        email: 'mdelacruzmelo@gmail.com',
+        password: '123456',
         error: '',
         loading: false,
         message: '',
@@ -28,7 +28,6 @@ const SigninComponent = () => {
                 } else if (data?.error) {
                     setValues({ ...values, error: data?.error, loading: false })
                 } else {
-                    // Save the user to cookie, save user to local storage and  authenticate the user
                     authenticate(data, () => {
                         if (isAuth() && isAuth().role === 1) {
                             Router.push('/admin')
