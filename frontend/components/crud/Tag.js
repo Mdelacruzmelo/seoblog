@@ -4,38 +4,37 @@ import { useState, useEffect } from 'react';
 // import Link from 'next/link';
 // import Router from 'next/router';
 // import { getToken } from '../../actions/auth';
-import { create, getCategories, removeCategory } from '../../actions/category';
+import { create, getTags, removeTag } from '../../actions/tag';
 
-const Category = ({ token }) => {
+const Tag = ({ token }) => {
 
     const [values, setValues] = useState({
         name: '',
         error: false,
         success: false,
-        categories: [],
+        tags: [],
         removed: false,
         reload: false
     });
 
-
-    const { name, error, success, categories, removed, reload } = values;
+    const { name, error, success, tags, removed, reload } = values;
 
     useEffect(() => {
-        loadCategories();
+        loadTags();
     }, [reload]);
 
-    const loadCategories = () => {
-        getCategories().then(data => {
+    const loadTags = () => {
+        getTags().then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
-                setValues({ ...values, categories: data });
+                setValues({ ...values, tags: data });
             }
         });
     };
 
-    const showCategories = () => {
-        return categories.map((c, i) => {
+    const showTags = () => {
+        return tags.map((c, i) => {
             return (
                 <button
                     onDoubleClick={() => deleteConfirm(c.slug)}
@@ -50,15 +49,14 @@ const Category = ({ token }) => {
     };
 
     const deleteConfirm = slug => {
-        let answer = window.confirm('Are you sure you want to delete this category?');
+        let answer = window.confirm('Are you sure you want to delete this tag?');
         if (answer) {
-            deleteCategory(slug);
+            deleteTag(slug);
         }
     };
 
-    const deleteCategory = slug => {
-        // console.log('delete', slug);
-        removeCategory(slug, token).then(data => {
+    const deleteTag = slug => {
+        removeTag(slug, token).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -76,7 +74,7 @@ const Category = ({ token }) => {
 
     const clickSubmit = e => {
         e.preventDefault();
-        // console.log('create category', name);
+        // console.log('create tag', name);
         create({ name }, token).then(data => {
             if (!data || data.error) {
                 setValues({
@@ -109,19 +107,19 @@ const Category = ({ token }) => {
 
     const showSuccess = () => {
         if (success) {
-            return <p className="text-success">Category is created</p>;
+            return <p className="text-success">Tag is created</p>;
         }
     };
 
     const showError = () => {
         if (error) {
-            return <p className="text-danger">Category already exist</p>;
+            return <p className="text-danger">Tag already exist</p>;
         }
     };
 
     const showRemoved = () => {
         if (removed) {
-            return <p className="text-danger">Category is removed</p>;
+            return <p className="text-danger">Tag is removed</p>;
         }
     };
 
@@ -129,7 +127,7 @@ const Category = ({ token }) => {
         setValues({ ...values, error: false, success: false, removed: '' });
     };
 
-    const newCategoryFom = () => (
+    const newTagFom = () => (
         <form onSubmit={clickSubmit}>
             <div className="form-group">
                 <label className="text-muted">Name</label>
@@ -149,11 +147,11 @@ const Category = ({ token }) => {
             {showError()}
             {showRemoved()}
             <div onMouseMove={mouseMoveHandler}>
-                {newCategoryFom()}
-                {showCategories()}
+                {newTagFom()}
+                {showTags()}
             </div>
         </>
     );
 };
 
-export default Category;
+export default Tag;

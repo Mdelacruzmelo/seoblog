@@ -1,10 +1,19 @@
-import React from 'react'
+import { useState, useEffect } from 'react';
 import Link from 'next/link'
 import Layout from '../../../components/Layout'
 import Admin from '../../../components/auth/Admin'
 import Category from '../../../components/crud/Category'
+import Tag from '../../../components/crud/Tag'
+import { getToken } from '../../../actions/auth';
 
 const CategoryTag = () => {
+
+    const [token, setToken] = useState()
+
+    useEffect(() => {
+        setToken(getToken())
+    }, [])
+
     return (
         <Layout>
             <Admin>
@@ -13,10 +22,10 @@ const CategoryTag = () => {
                         <h3>Manage Categories and Tags</h3>
                     </div>
                     <div className="col-md-6">
-                        <Category />
+                        <Category token={token} />
                     </div>
                     <div className="col-md-6">
-                        Tags
+                        <Tag token={token} />
                     </div>
                 </div>
             </Admin>
