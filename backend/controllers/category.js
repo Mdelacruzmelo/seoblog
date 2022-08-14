@@ -21,3 +21,42 @@ exports.create = (req, res) => {
 
     })
 }
+
+exports.list = (_req, res) => {
+
+    Category.find({}).exec((err, data) => {
+
+        if (err) return res.status(400).json({ error: errorHandler(err) })
+        else if (!data) return res.status(400).json({ error: 'Creation failed. Please contact support.' })
+
+        return res.json(data)
+
+    })
+}
+
+exports.read = (req, res) => {
+
+    const slug = req?.params?.slug?.toLowerCase()
+
+    Category.findOne({ slug }).exec((err, category) => {
+
+        if (err) return res.status(400).json({ error: errorHandler(err) })
+        else if (!category) return res.status(400).json({ error: 'Creation failed. Please contact support.' })
+
+        return res.json(category) // Tambien retornar los blogs asociados
+
+    })
+}
+
+exports.remove = (req, res) => {
+
+    const slug = req?.params?.slug?.toLowerCase()
+
+    Category.findOneAndRemove({ slug }).exec((err, _category) => {
+
+        if (err) return res.status(400).json({ error: errorHandler(err) })
+
+        return res.json({ message: 'Category removed successfully' })
+
+    })
+}

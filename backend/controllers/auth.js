@@ -85,7 +85,7 @@ exports.requireSignin = expressjwt({
     userProperty: "auth"
 });
 
-exports.addUserToProfile = (req, res, next) => {
+exports.userMiddleware = (req, res, next) => {
     const authUserId = req.auth._id
     User.findById({ _id: authUserId }).exec((err, user) => {
         if (err || !user) {
@@ -96,7 +96,7 @@ exports.addUserToProfile = (req, res, next) => {
     })
 }
 
-exports.addAdminUserToProfile = (req, res, next) => {
+exports.adminMiddleware = (req, res, next) => {
 
     const adminUserId = req.auth._id
 

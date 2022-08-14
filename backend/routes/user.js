@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const { requireSignin, addUserToProfile } = require('../controllers/auth')
+const { requireSignin, userMiddleware } = require('../controllers/auth')
 const { removeUserPasswordFromProfile } = require('../controllers/user')
 
-router.get('/profile', requireSignin, addUserToProfile, removeUserPasswordFromProfile)
+router.get('/profile', requireSignin, userMiddleware, removeUserPasswordFromProfile)
 
 module.exports = router
