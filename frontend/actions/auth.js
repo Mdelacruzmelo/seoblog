@@ -69,7 +69,7 @@ export const authenticate = (data, next) => {
 }
 
 export const isAuth = () => {
-    // if (typeof window === 'undefined') {
+    if (typeof window === 'object') {
         if (hasCookie('token')) {
             if (localStorage.getItem('user')) {
                 return JSON.parse(localStorage.getItem('user'))
@@ -77,5 +77,5 @@ export const isAuth = () => {
                 return false
             }
         }
-    // }
+    }
 }

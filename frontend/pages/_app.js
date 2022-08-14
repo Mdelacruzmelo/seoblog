@@ -1,6 +1,6 @@
-// pages/_app
 import Head from 'next/head'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../public/styles.css'
 
 const App = ({ Component, pageProps }) => {
     return (
