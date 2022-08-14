@@ -83,3 +83,16 @@ export const isAuth = () => {
         // }
     }
 }
+
+export const getToken = () => {
+    if (typeof window !== 'undefined') {
+        // if (hasCookie('token')) {
+        if (localStorage.getItem('token')) {
+            return JSON.parse(localStorage.getItem('token'))
+        } else {
+            return false
+        }
+
+        // }
+    }
+}

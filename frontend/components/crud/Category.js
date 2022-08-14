@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react';
 // import Link from 'next/link';
 // import Router from 'next/router';
-// import { isAuth, getCookie } from '../../actions/auth';
+import { getToken } from '../../actions/auth';
 import { create, getCategories, removeCategory } from '../../actions/category';
 
 const Category = () => {
+
+    const [token, setToken] = useState()
     const [values, setValues] = useState({
         name: '',
         error: false,
@@ -16,11 +18,11 @@ const Category = () => {
         reload: false
     });
 
+    useEffect(() => {
+        setToken(getToken())
+    }, [])
+
     const { name, error, success, categories, removed, reload } = values;
-    let token = ""
-    if (typeof window === 'object') {
-        localStorage.getItem('token')
-    }
 
     useEffect(() => {
         loadCategories();
@@ -64,7 +66,14 @@ const Category = () => {
             if (data.error) {
                 console.log(data.error);
             } else {
-                setValues({ ...values, error: false, success: false, name: '', removed: !removed, reload: !reload });
+                setValues({
+                    ...values,
+                    error: false,
+                    success: false,
+                    name: '',
+                    removed: !removed,
+                    reload: !reload
+                });
             }
         });
     };
@@ -73,16 +82,33 @@ const Category = () => {
         e.preventDefault();
         // console.log('create category', name);
         create({ name }, token).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error, success: false });
+            if (!data || data.error) {
+                setValues({
+                    ...values,
+                    error: data.error,
+                    success: false
+                });
             } else {
-                setValues({ ...values, error: false, success: false, name: '', removed: !removed, reload: !reload });
+                setValues({
+                    ...values,
+                    error: false,
+                    success: false,
+                    name: '',
+                    removed: !removed,
+                    reload: !reload
+                });
             }
         });
     };
 
     const handleChange = e => {
-        setValues({ ...values, name: e.target.value, error: false, success: false, removed: '' });
+        setValues({
+            ...values,
+            name: e.target.value,
+            error: false,
+            success: false,
+            removed: ''
+        });
     };
 
     const showSuccess = () => {
@@ -122,7 +148,7 @@ const Category = () => {
     );
 
     return (
-        <React.Fragment>
+        <>
             {showSuccess()}
             {showError()}
             {showRemoved()}
@@ -130,7 +156,7 @@ const Category = () => {
                 {newCategoryFom()}
                 {showCategories()}
             </div>
-        </React.Fragment>
+        </>
     );
 };
 

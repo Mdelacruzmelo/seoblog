@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Layout from '../../../components/Layout'
 import Admin from '../../../components/auth/Admin'
+import Category from '../../../components/crud/Category'
 
 const CategoryTag = () => {
     return (
@@ -12,7 +13,7 @@ const CategoryTag = () => {
                         <h3>Manage Categories and Tags</h3>
                     </div>
                     <div className="col-md-6">
-                        Categories
+                        <Category />
                     </div>
                     <div className="col-md-6">
                         Tags
