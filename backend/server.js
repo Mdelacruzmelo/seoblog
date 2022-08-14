@@ -4,8 +4,9 @@ const morgan = require('morgan')
 // const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-const authRoutes = require('./routes/auth')
 const blogRoutes = require('./routes/blog')
+const authRoutes = require('./routes/auth')
+const userRoutes = require('./routes/user')
 
 require('dotenv').config()
 
@@ -14,12 +15,12 @@ const app = express()
 
 // db
 mongoose
-    .connect(process.env.DATABASE_LOCAL, { useNewUrlParser: true })
+    .connect(process.env.DATABASE_CLOUD, { useNewUrlParser: true })
     .then(() => {
         console.log("Database connected")
     })
     .catch((error) => {
-        console.log('~ error', error)
+        console.error('~ error', error)
     })
 
 // middlewares
@@ -31,6 +32,7 @@ app.use(cookieParser())
 // Route middlewares
 app.use('/api', blogRoutes)
 app.use('/api', authRoutes)
+app.use('/api', userRoutes)
 
 // cors
 if (process.env.NODE_ENV === 'development') {

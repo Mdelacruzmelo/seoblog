@@ -2,7 +2,6 @@ const User = require('../models/user');
 const shortId = require('shortid');
 const expressJwt = require('express-jwt');
 const jwt = require('jsonwebtoken');
-const user = require('../models/user');
 
 require('dotenv').config()
 
@@ -43,7 +42,7 @@ exports.signin = (req, res) => {
     User.findOne({ email }).exec((err, user) => {
         if (err || !user) {
             return res.status(400).json({
-                error: 'User with that email doest not exist. Please signup.'
+                error: `User email: ${email} doest not exist. Please signup.`
             })
         }
 
@@ -85,3 +84,33 @@ exports.requireSignin = expressjwt({
     algorithms: ["HS256"],
     userProperty: "auth"
 });
+
+exports.addUserToProfile = (req, res, next) => {
+    const authUserId = req.auth._id
+    User.findById({ _id: authUserId }).exec((err, user) => {
+        if (err || !user) {
+            return res.status(400).json({ error: 'User not found.' })
+        }
+        req.profile = user
+        next()
+    })
+}
+
+exports.addAdminUserToProfile = (req, res, next) => {
+
+    const adminUserId = req.auth._id
+
+    User.findById({ _id: adminUserId }).exec((err, user) => {
+
+        if (err || !user) {
+            return res.status(400).json({ error: 'Admin user not found.' })
+        }
+
+        if (user.role !== 1) {
+            return res.status(400).json({ error: 'Admin resource. Access denied.' })
+        }
+
+        req.profile = user
+        next()
+    })
+}

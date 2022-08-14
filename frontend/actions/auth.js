@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import {
     setCookie,
-    // getCookie, 
     deleteCookie,
     hasCookie
 } from 'cookies-next';
@@ -70,13 +69,11 @@ export const authenticate = (data, next) => {
 }
 
 export const isAuth = () => {
-    if (typeof window === 'undefined') {
-        if (hasCookie('token')) {
-            if (localStorage.getItem('user')) {
-                return JSON.parse(localStorage.getItem('user'))
-            } else {
-                return false
-            }
+    if (hasCookie('token')) {
+        if (localStorage.getItem('user')) {
+            return JSON.parse(localStorage.getItem('user'))
+        } else {
+            return false
         }
     }
 }

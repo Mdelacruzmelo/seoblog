@@ -24,13 +24,12 @@ const SigninComponent = () => {
         signin({ email, password })
             .then((data) => {
                 if (data?.error) {
-                    setValues({ ...values, error, loading: false })
+                    setValues({ ...values, error: data.error, loading: false })
                 } else {
                     // Save the user to cookie,
                     // Saave user to local storage
                     // authenticate the user
                     authenticate(data, () => { Router.push(`/`) })
-
                 }
             })
     }

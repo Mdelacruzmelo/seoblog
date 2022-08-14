@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: Number,
-        trime: true
+        default: 0
     },
     phoyo: {
         data: Buffer,
