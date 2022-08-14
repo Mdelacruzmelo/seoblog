@@ -1,4 +1,4 @@
-const Category = require('../models/category');
+const Tag = require('../models/tag');
 const slugify = require('slugify')
 const { errorHandler } = require('../helpers/dbErrorHandler')
 
@@ -7,16 +7,16 @@ exports.create = (req, res) => {
     const { name } = req.body
     const slug = slugify(name).toLowerCase()
 
-    let category = new Category({ name, slug })
+    let tag = new Tag({ name, slug })
 
-    category.save((err, data) => {
+    tag.save((err, data) => {
 
         if (err) return res.status(400).json({ error: errorHandler(err) })
         else if (!data) return res.status(400).json({ error: 'Creation failed. Please contact support.' })
 
         return res.json({
             ...data,
-            message: 'Category created sccessfully.'
+            message: 'Tag created sccessfully.'
         })
 
     })
@@ -24,10 +24,10 @@ exports.create = (req, res) => {
 
 exports.list = (_req, res) => {
 
-    Category.find({}).exec((err, data) => {
+    Tag.find({}).exec((err, data) => {
 
         if (err) return res.status(400).json({ error: errorHandler(err) })
-        else if (!data) return res.status(400).json({ error: 'Could not get categories. Please contact support.' })
+        else if (!data) return res.status(400).json({ error: 'Could not get tags. Please contact support.' })
 
         return res.json(data)
 
@@ -36,27 +36,27 @@ exports.list = (_req, res) => {
 
 exports.read = (req, res) => {
 
-    const slug = req?.params?.slug?.toLowerCase()
+    const name = req?.params?.name?.toLowerCase()
 
-    Category.findOne({ slug }).exec((err, category) => {
+    Tag.findOne({ name }).exec((err, tag) => {
 
         if (err) return res.status(400).json({ error: errorHandler(err) })
-        else if (!category) return res.status(400).json({ message: 'Categories not found.' })
+        else if (!tag) return res.status(400).json({ message: 'Tag not found.' })
 
-        return res.json(category) // Tambien retornar los blogs asociados
+        return res.json(tag)
 
     })
 }
 
 exports.remove = (req, res) => {
 
-    const slug = req?.params?.slug?.toLowerCase()
+    const name = req?.params?.name?.toLowerCase()
 
-    Category.findOneAndRemove({ slug }).exec((err, _category) => {
+    Tag.findOneAndRemove({ name }).exec((err, _category) => {
 
         if (err) return res.status(400).json({ error: errorHandler(err) })
 
-        return res.json({ message: 'Category removed successfully' })
+        return res.json({ message: 'Tag removed successfully' })
 
     })
 }
