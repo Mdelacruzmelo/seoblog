@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link'
-import Router from 'next/router'
-import { APP_NAME } from '../config'
+import { useRouter } from 'next/router'
+import nProgress from 'nprogress';
 import {
     Navbar,
     Nav,
     NavItem,
     NavLink,
 } from 'reactstrap';
+import { APP_NAME } from '../config'
 import { signout, isAuth } from '../actions/auth'
 
 const Header = () => {
+
+    const router = useRouter()
+
+    useEffect(() => {
+        router.events.on('routeChangeStart', nProgress.start)
+        router.events.on('routeChangeComplete', nProgress.done)
+    }, [])
 
     const styleHidden = {
         width: '0px',
@@ -62,7 +70,7 @@ const Header = () => {
                     <NavItem style={!isAuth() ? styleHidden : {}}>
                         <NavLink
                             style={{ cursor: 'pointer' }}
-                            onClick={() => { signout(() => Router.replace(`/signin`)) }}>
+                            onClick={() => { signout(() => router.replace(`/signin`)) }}>
                             Signout
                         </NavLink>
                     </NavItem>

@@ -69,11 +69,13 @@ export const authenticate = (data, next) => {
 }
 
 export const isAuth = () => {
-    if (hasCookie('token')) {
-        if (localStorage.getItem('user')) {
-            return JSON.parse(localStorage.getItem('user'))
-        } else {
-            return false
+    // if (typeof window === 'undefined') {
+        if (hasCookie('token')) {
+            if (localStorage.getItem('user')) {
+                return JSON.parse(localStorage.getItem('user'))
+            } else {
+                return false
+            }
         }
-    }
+    // }
 }
