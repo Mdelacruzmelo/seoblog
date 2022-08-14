@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link'
+import Router from 'next/router'
 import { APP_NAME } from '../config'
 import {
     Collapse,
@@ -15,8 +16,9 @@ import {
     DropdownItem,
     NavbarText,
 } from 'reactstrap';
+import { signout, isAuth } from '../actions/auth'
 
-function Example(args) {
+function Header(args) {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
@@ -30,16 +32,30 @@ function Example(args) {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="me-auto" navbar>
-                        <NavItem>
-                            <Link href="/signin">
-                                <NavLink>Signin</NavLink>
-                            </Link>
-                        </NavItem>
-                        <NavItem>
-                            <Link href="/signup">
-                                <NavLink>Signup</NavLink>
-                            </Link>
-                        </NavItem>
+
+                        {isAuth() ? (
+                            <NavItem>
+                                <Link href="/signout">
+                                    <NavLink onClick={() => { signout(() => Router.replace(`/signin`)) }}>
+                                        Signout
+                                    </NavLink>
+                                </Link>
+                            </NavItem>) : (
+                            <>
+                                <NavItem>
+                                    <Link href="/signin">
+                                        <NavLink>Signin</NavLink>
+                                    </Link>
+                                </NavItem>
+                                <NavItem>
+                                    <Link href="/signup">
+                                        <NavLink>Signup</NavLink>
+                                    </Link>
+                                </NavItem>
+                            </>
+                        )
+                        }
+
                         <NavItem>
                             <NavLink href="https://github.com/reactstrap/reactstrap">
                                 GitHub
@@ -64,4 +80,4 @@ function Example(args) {
     );
 }
 
-export default Example;
+export default Header;

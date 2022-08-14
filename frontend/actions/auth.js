@@ -1,5 +1,10 @@
 import fetch from 'isomorphic-fetch'
-import Cookies from 'js-cookie'
+import {
+    setCookie,
+    // getCookie, 
+    deleteCookie,
+    hasCookie
+} from 'cookies-next';
 import { API } from '../config'
 
 // Signup
@@ -32,47 +37,32 @@ export const signin = (user) => {
         .catch((err) => console.error(err))
 }
 
-// Set cookie
-export const setCookie = (key, value) => {
+// Signout
+export const signout = (next) => {
+    deleteCookie('token')
+    removeLocalStorage('user')
+    next()
 
-    if (typeof window === 'undefined') {
-        Cookies.set(key, value, {
-            expired: 1
-        })
-    }
-}
-
-// Remove cookie
-export const removeCookie = (key) => {
-    if (typeof window === 'undefined') {
-        Cookies.remove(key)
-    }
-}
-
-// Get cookie
-export const getCookie = (key) => {
-    if (typeof window === 'undefined') {
-        Cookies.get(key)
-    }
+    return fetch(`${API}/signout`, {
+        method: 'GET'
+    })
+        .then((_response) => console.info('Signout success'))
+        .catch((error) => console.error(`Signout failed: ${JSON.stringify(error)}`))
 }
 
 // Set Localstorage
 export const setLocalStorage = (key, value) => {
-    if (typeof window === 'undefined') {
-        localStorage.setItem(key, JSON.stringify(value))
-    }
+    localStorage.setItem(key, JSON.stringify(value))
+
 }
 
 // Remove Localstorage
 export const removeLocalStorage = (key) => {
-    if (typeof window === 'undefined') {
-        localStorage.removeItem(key)
-    }
+    localStorage.removeItem(key)
 }
 
 // Autehnticate user by pass data to cookie and localstorage
 export const authenticate = (data, next) => {
-
     setCookie('token', data.token)
     setLocalStorage('user', data.user)
     if (next) next()
@@ -81,13 +71,11 @@ export const authenticate = (data, next) => {
 
 export const isAuth = () => {
 
-    if (typeof window === 'undefined') {
-        if (getCookie('token')) {
-            if (localStorage.getItem('user')) {
-                return JSON.parse(localStorage.getItem('user'))
-            } else {
-                return false
-            }
+    if (hasCookie('token')) {
+        if (localStorage.getItem('user')) {
+            return JSON.parse(localStorage.getItem('user'))
+        } else {
+            return false
         }
     }
 
