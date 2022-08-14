@@ -28,6 +28,37 @@ const Header = () => {
                     <NavLink className="font-weight-bold">{APP_NAME}</NavLink>
                 </Link>
                 <Nav className="me-auto">
+
+                    <NavItem style={isAuth() ? styleHidden : { cursor: 'pointer' }}>
+                        <Link href="/signin"><NavLink>Signin</NavLink></Link>
+                    </NavItem>
+
+                    <NavItem style={isAuth() ? styleHidden : { cursor: 'pointer' }}>
+                        <Link href="/signup"><NavLink>Signup</NavLink></Link>
+                    </NavItem>
+
+                    <NavItem style={
+                        !isAuth()
+                            ? styleHidden
+                            : isAuth() && isAuth().role === 1
+                                ? styleHidden
+                                : { cursor: 'pointer' }}>
+                        <Link href="/user">
+                            <NavLink>{`${isAuth()?.name}'s Dashboard`}</NavLink>
+                        </Link>
+                    </NavItem>
+
+                    <NavItem style={
+                        !isAuth()
+                            ? styleHidden
+                            : isAuth() && isAuth().role === 0
+                                ? styleHidden
+                                : { cursor: 'pointer' }}>
+                        <Link href="/admin">
+                            <NavLink>{`${isAuth()?.name}'s Dashboard`}</NavLink>
+                        </Link>
+                    </NavItem>
+
                     <NavItem style={!isAuth() ? styleHidden : {}}>
                         <NavLink
                             style={{ cursor: 'pointer' }}
@@ -35,17 +66,7 @@ const Header = () => {
                             Signout
                         </NavLink>
                     </NavItem>
-                    <NavItem style={isAuth() ? styleHidden : { cursor: 'pointer' }}>
-                        <Link href="/signin"><NavLink>Signin</NavLink></Link>
-                    </NavItem>
-                    <NavItem style={isAuth() ? styleHidden : { cursor: 'pointer' }}>
-                        <Link href="/signup"><NavLink>Signup</NavLink></Link>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="https://github.com/reactstrap/reactstrap">
-                            GitHub
-                        </NavLink>
-                    </NavItem>
+
                 </Nav>
             </Navbar>
         </div>
