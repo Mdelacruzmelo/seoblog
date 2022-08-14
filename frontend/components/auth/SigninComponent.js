@@ -23,8 +23,11 @@ const SigninComponent = () => {
         setValues({ ...values, error: false, loading: true })
         signin({ email, password })
             .then((data) => {
-                if (data?.error) {
-                    setValues({ ...values, error: data.error, loading: false })
+                console.log('~ data', data)
+                if (!data) {
+                    setValues({ ...values, error: 'Could not create a user', loading: false })
+                } else if (data?.error) {
+                    setValues({ ...values, error: data?.error, loading: false })
                 } else {
                     // Save the user to cookie, save user to local storage and  authenticate the user
                     authenticate(data, () => {
