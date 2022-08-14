@@ -26,10 +26,14 @@ const SigninComponent = () => {
                 if (data?.error) {
                     setValues({ ...values, error: data.error, loading: false })
                 } else {
-                    // Save the user to cookie,
-                    // Saave user to local storage
-                    // authenticate the user
-                    authenticate(data, () => { Router.push(`/`) })
+                    // Save the user to cookie, save user to local storage and  authenticate the user
+                    authenticate(data, () => {
+                        if (isAuth() && isAuth().role === 1) {
+                            Router.push('/admin')
+                        } else {
+                            Router.push('/user')
+                        }
+                    })
                 }
             })
     }
