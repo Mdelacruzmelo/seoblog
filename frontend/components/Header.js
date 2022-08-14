@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import Link from 'next/link'
 import Router from 'next/router'
+import {
+    setCookie,
+    // getCookie, 
+    deleteCookie,
+    hasCookie
+} from 'cookies-next';
 import { APP_NAME } from '../config'
 import {
     Collapse,
     Navbar,
     NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
     NavLink,
@@ -14,48 +19,42 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    NavbarText,
+    NavbarText
 } from 'reactstrap';
 import { signout, isAuth } from '../actions/auth'
 
-function Header(args) {
+const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
-
     const toggle = () => setIsOpen(!isOpen);
 
     return (
         <div>
-            <Navbar {...args}>
+            <Navbar >
                 <Link href="/">
                     <NavLink className="font-weight-bold">{APP_NAME}</NavLink>
                 </Link>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="me-auto" navbar>
-
-                        {isAuth() ? (
+                        {isAuth() && (
                             <NavItem>
-                                <Link href="/signout">
-                                    <NavLink onClick={() => { signout(() => Router.replace(`/signin`)) }}>
-                                        Signout
-                                    </NavLink>
-                                </Link>
-                            </NavItem>) : (
+                                <NavLink
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => { signout(() => Router.replace(`/signin`)) }}>
+                                    Signout
+                                </NavLink>
+                            </NavItem>
+                        )}
+                        {!isAuth() && (
                             <>
                                 <NavItem>
-                                    <Link href="/signin">
-                                        <NavLink>Signin</NavLink>
-                                    </Link>
+                                    <Link href="/signin"><NavLink>Signin</NavLink></Link>
                                 </NavItem>
                                 <NavItem>
-                                    <Link href="/signup">
-                                        <NavLink>Signup</NavLink>
-                                    </Link>
+                                    <Link href="/signup"><NavLink>Signup</NavLink></Link>
                                 </NavItem>
                             </>
-                        )
-                        }
-
+                        )}
                         <NavItem>
                             <NavLink href="https://github.com/reactstrap/reactstrap">
                                 GitHub
@@ -72,11 +71,11 @@ function Header(args) {
                                 <DropdownItem>Reset</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
-                    </Nav>
+                    </Nav >
                     <NavbarText>Simple Text</NavbarText>
-                </Collapse>
-            </Navbar>
-        </div>
+                </Collapse >
+            </Navbar >
+        </div >
     );
 }
 

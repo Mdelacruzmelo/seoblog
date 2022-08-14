@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
-import { signin, authenticate } from '../../actions/auth'
+import React, { useState, useEffect } from 'react'
 import Router from 'next/router'
+import { signin, authenticate } from '../../actions/auth'
+import { isAuth } from '../../actions/auth'
 
 const SigninComponent = () => {
+
+    useEffect(() => {
+        isAuth() && Router.replace('/')
+    }, [])
 
     const [values, setValues] = useState({
         email: 'mdela2@gmail.com',
