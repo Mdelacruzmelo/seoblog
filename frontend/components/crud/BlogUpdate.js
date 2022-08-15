@@ -4,7 +4,6 @@ import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
 import { isAuth } from '../../actions/auth';
-import { getCookie } from 'cookies-next';
 import { getCategories } from '../../actions/category';
 import { getTags } from '../../actions/tag';
 import { singleBlog, updateBlog } from '../../actions/blog';
@@ -36,7 +35,7 @@ const BlogUpdate = ({ router }) => {
     const { error, success, formData, title } = values;
 
     useEffect(() => {
-        setToken(getCookie('token'))
+        setToken(localStorage.getItem('token'))
     }, []);
 
     useEffect(() => {

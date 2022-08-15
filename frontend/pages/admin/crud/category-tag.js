@@ -11,7 +11,7 @@ const CategoryTag = () => {
     const [token, setToken] = useState()
 
     useEffect(() => {
-        setToken(getToken())
+        setToken(localStorage.getItem('token'))
     }, [])
 
     return (

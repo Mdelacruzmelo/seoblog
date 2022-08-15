@@ -4,7 +4,6 @@ import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
 import { isAuth } from '../../actions/auth';
-import { getCookie } from 'cookies-next';
 import { getCategories } from '../../actions/category';
 import { getTags } from '../../actions/tag';
 import { createBlog } from '../../actions/blog';
@@ -47,7 +46,7 @@ const CreateBlog = ({ router }) => {
     const { error, sizeError, success, formData, title, hidePublishButton } = values;
 
     useEffect(() => {
-        setToken(getCookie('token'))
+        setToken(localStorage.getItem('token'))
     }, [])
 
     useEffect(() => {
@@ -80,8 +79,8 @@ const CreateBlog = ({ router }) => {
         e.preventDefault();
         // console.log('ready to publishBlog');
         createBlog(formData, token).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
+            if (!data || data.error) {
+                setValues({ ...values, error: data?.error });
             } else {
                 setValues({ ...values, title: '', error: '', success: `A new blog titled "${data.title}" is created` });
                 setBody('');

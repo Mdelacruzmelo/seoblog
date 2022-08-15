@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Router from 'next/router';
 import { isAuth, updateUser } from '../../actions/auth';
-import { getCookie } from 'cookies-next';
 import { getProfile, update } from '../../actions/user';
 import { API } from '../../config';
 
@@ -23,15 +22,15 @@ const ProfileUpdate = () => {
     });
 
     useEffect(() => {
-        setToken(getCookie('token'))
+        setToken(localStorage.getItem('token'))
     }, [])
 
     const { username, name, email, about, password, error, success, loading, photo, userData } = values;
 
     const init = () => {
         getProfile(token).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
+            if (!data || data.error) {
+                setValues({ ...values, error: data?.error });
             } else {
                 setValues({
                     ...values,

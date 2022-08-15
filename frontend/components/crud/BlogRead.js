@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Router from 'next/router';
 import { isAuth } from '../../actions/auth';
-import { getCookie } from 'cookies-next';
 import { list, removeBlog } from '../../actions/blog';
 import moment from 'moment';
 
@@ -14,7 +13,7 @@ const BlogRead = ({ username }) => {
 
     useEffect(() => {
         loadBlogs();
-        setToken(getCookie('token'))
+        setToken(localStorage.getItem('token'))
     }, []);
 
     const loadBlogs = () => {
