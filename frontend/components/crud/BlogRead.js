@@ -79,14 +79,14 @@ const BlogRead = ({ username }) => {
     };
 
     return (
-        <React.Fragment>
+        <>
             <div className="row">
                 <div className="col-md-12">
                     {message && <div className="alert alert-warning">{message}</div>}
                     {showAllBlogs()}
                 </div>
             </div>
-        </React.Fragment>
+        </>
     );
 };
 

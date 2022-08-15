@@ -29,7 +29,7 @@ const Tag = ({ tag, blogs, query }) => {
     );
 
     return (
-        <React.Fragment>
+        <>
             {head()}
             <Layout>
                 <main>
@@ -48,7 +48,7 @@ const Tag = ({ tag, blogs, query }) => {
                     </div>
                 </main>
             </Layout>
-        </React.Fragment>
+        </>
     );
 };
 

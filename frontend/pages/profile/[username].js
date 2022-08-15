@@ -39,7 +39,7 @@ const UserProfile = ({ user, blogs, query }) => {
     };
 
     return (
-        <React.Fragment>
+        <>
             {head()}
             <Layout>
                 <div className="container">
@@ -97,7 +97,7 @@ const UserProfile = ({ user, blogs, query }) => {
                     </div>
                 </div>
             </Layout>
-        </React.Fragment>
+        </>
     );
 };
 

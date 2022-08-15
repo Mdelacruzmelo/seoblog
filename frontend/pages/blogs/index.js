@@ -98,7 +98,7 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, blogSkip, rout
     };
 
     return (
-        <React.Fragment>
+        <>
             {head()}
             <Layout>
                 <main>
@@ -123,7 +123,7 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, blogSkip, rout
                     <div className="text-center pt-5 pb-5">{loadMoreButton()}</div>
                 </main>
             </Layout>
-        </React.Fragment>
+        </>
     );
 };
 

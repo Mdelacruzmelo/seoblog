@@ -29,7 +29,7 @@ const Category = ({ category, blogs, query }) => {
     );
 
     return (
-        <React.Fragment>
+        <>
             {head()}
             <Layout>
                 <main>
@@ -48,7 +48,7 @@ const Category = ({ category, blogs, query }) => {
                     </div>
                 </main>
             </Layout>
-        </React.Fragment>
+        </>
     );
 };
 

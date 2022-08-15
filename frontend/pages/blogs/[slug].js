@@ -79,7 +79,7 @@ const SingleBlog = ({ blog, query }) => {
     };
 
     return (
-        <React.Fragment>
+        <>
             {head()}
             <Layout>
                 <main>
@@ -131,7 +131,7 @@ const SingleBlog = ({ blog, query }) => {
                     </article>
                 </main>
             </Layout>
-        </React.Fragment>
+        </>
     );
 };
 

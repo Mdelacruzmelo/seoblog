@@ -134,7 +134,7 @@ const ProfileUpdate = () => {
     );
 
     return (
-        <React.Fragment>
+        <>
             <div className="container">
                 <div className="row">
                     <div className="col-md-4">
@@ -153,7 +153,7 @@ const ProfileUpdate = () => {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </>
     );
 };
 
