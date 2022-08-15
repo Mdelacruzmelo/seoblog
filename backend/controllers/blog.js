@@ -30,7 +30,7 @@ export const create = (req, res) => {
 
         if (!body || body.length < 200) {
             return res.status(400).json({
-                error: 'Content is too short'
+                error: `Content is too short: ${body}`
             });
         }
 
