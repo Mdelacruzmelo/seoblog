@@ -86,7 +86,7 @@ export const requireSignin = expressjwt({
     userProperty: "auth"
 });
 
-export const userMiddleware = (req, res, next) => {
+export const authMiddleware = (req, res, next) => {
     const authUserId = req.auth._id
     User.findById({ _id: authUserId }).exec((err, user) => {
         if (err || !user) {

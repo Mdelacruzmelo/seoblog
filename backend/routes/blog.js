@@ -12,7 +12,7 @@ import {
     listByUser
 } from '../controllers/blog.js'
 
-import { requireSignin, adminMiddleware, userMiddleware, canUpdateDeleteBlog } from '../controllers/auth.js'
+import { requireSignin, adminMiddleware, authMiddleware, canUpdateDeleteBlog } from '../controllers/auth.js'
 
 const router = express.Router();
 
@@ -27,9 +27,9 @@ router.post('/blogs/related', listRelated);
 router.get('/blogs/search', listSearch);
 
 // auth user blog crud
-router.post('/user/blog', requireSignin, userMiddleware, create);
+router.post('/user/blog', requireSignin, authMiddleware, create);
 router.get('/:username/blogs', listByUser);
-router.delete('/user/blog/:slug', requireSignin, userMiddleware, canUpdateDeleteBlog, remove);
-router.put('/user/blog/:slug', requireSignin, userMiddleware, canUpdateDeleteBlog, update);
+router.delete('/user/blog/:slug', requireSignin, authMiddleware, canUpdateDeleteBlog, remove);
+router.put('/user/blog/:slug', requireSignin, authMiddleware, canUpdateDeleteBlog, update);
 
 export default router;
