@@ -27,7 +27,7 @@ const BlogUpdate = ({ router }) => {
         title: '',
         error: '',
         success: '',
-        formData: '',
+        formData: new FormData(),
         title: '',
         body: ''
     });
@@ -79,7 +79,7 @@ const BlogUpdate = ({ router }) => {
     const initCategories = () => {
         getCategories().then(data => {
             if (data.error) {
-                setValues({ ...values, error: data.error });
+                setValues({ ...values, error: data.error, formData: new FormData() });
             } else {
                 setCategories(data);
             }
@@ -89,7 +89,7 @@ const BlogUpdate = ({ router }) => {
     const initTags = () => {
         getTags().then(data => {
             if (data.error) {
-                setValues({ ...values, error: data.error });
+                setValues({ ...values, error: data.error, formData: new FormData() });
             } else {
                 setTags(data);
             }

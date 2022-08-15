@@ -18,6 +18,7 @@ const BlogRead = ({ username }) => {
 
     const loadBlogs = () => {
         list(username).then(data => {
+            console.log('~ data', data)
             if (data.error) {
                 console.error(data.error);
             } else {
