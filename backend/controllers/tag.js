@@ -41,7 +41,7 @@ export const read = (req, res) => {
     Tag.findOne({ name }).exec((err, tag) => {
 
         if (err) return res.status(400).json({ error: errorHandler(err) })
-        else if (!tag) return res.status(400).json({ message: 'Tag not found.' })
+        else if (!tag) return res.status(400).json({ error: 'Tags not found.' })
 
         return res.json(tag)
 

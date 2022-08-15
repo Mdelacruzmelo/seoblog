@@ -52,14 +52,16 @@ const Tag = ({ tag, blogs, query }) => {
     );
 };
 
-Tag.getInitialProps = ({ query }) => {
-    return singleTag(query.slug).then(data => {
-        if (data.error) {
-            console.error(data.error);
-        } else {
-            return { tag: data.tag, blogs: data.blogs, query };
-        }
-    });
+Tag.getInitialProps = async ({ query }) => {
+    console.log('~ query', query)
+    const data = await singleTag(query.slug)
+    if (data.error) {
+        console.error(data.error);
+        return {}
+    } else {
+        return { tag: data.tag, blogs: data.blogs, query };
+    }
 };
+
 
 export default Tag;

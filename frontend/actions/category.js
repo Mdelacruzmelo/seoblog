@@ -1,5 +1,19 @@
 import { API } from '../config'
 
+export const create = (category, token) => {
+    return fetch(`${API}/category`, {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(category)
+    })
+        .then((response) => response.json())
+        .catch((err) => console.error(err))
+}
+
 export const getCategories = () => {
 
     return fetch(`${API}/categories`, {
@@ -14,19 +28,17 @@ export const getCategories = () => {
         .catch((err) => console.error(err))
 }
 
-export const create = (category, token) => {
-    return fetch(`${API}/category`, {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(category)
+
+
+export const singleCategory = slug => {
+    return fetch(`${API}/category/${slug}`, {
+        method: 'GET'
     })
-        .then((response) => response.json())
-        .catch((err) => console.error(err))
-}
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
 
 export const removeCategory = (slug, token) => {
 

@@ -41,7 +41,7 @@ export const read = (req, res) => {
     Category.findOne({ slug }).exec((err, category) => {
 
         if (err) return res.status(400).json({ error: errorHandler(err) })
-        else if (!category) return res.status(400).json({ message: 'Categories not found.' })
+        else if (!category) return res.status(400).json({ error: 'Categories not found.' })
 
         return res.json(category) // Tambien retornar los blogs asociados
 
