@@ -1,7 +1,35 @@
-const express = require('express')
-const router = express.Router()
-const { time } = require('../controllers/blog')
+import express from 'express';
+import {
+    create,
+    list,
+    listAllBlogsCategoriesTags,
+    read,
+    remove,
+    update,
+    photo,
+    listRelated,
+    listSearch,
+    listByUser
+} from '../controllers/blog.js'
 
-router.get('/', time)
+import { requireSignin, adminMiddleware, userMiddleware, canUpdateDeleteBlog } from '../controllers/auth.js'
 
-module.exports = router
+const router = express.Router();
+
+router.post('/blog', requireSignin, adminMiddleware, create);
+router.get('/blogs', list);
+router.post('/blogs-categories-tags', listAllBlogsCategoriesTags);
+router.get('/blog/:slug', read);
+router.delete('/blog/:slug', requireSignin, adminMiddleware, remove);
+router.put('/blog/:slug', requireSignin, adminMiddleware, update);
+router.get('/blog/photo/:slug', photo);
+router.post('/blogs/related', listRelated);
+router.get('/blogs/search', listSearch);
+
+// auth user blog crud
+router.post('/user/blog', requireSignin, userMiddleware, create);
+router.get('/:username/blogs', listByUser);
+router.delete('/user/blog/:slug', requireSignin, userMiddleware, canUpdateDeleteBlog, remove);
+router.put('/user/blog/:slug', requireSignin, userMiddleware, canUpdateDeleteBlog, update);
+
+export default router;

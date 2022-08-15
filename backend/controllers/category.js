@@ -1,8 +1,8 @@
-const Category = require('../models/category');
-const slugify = require('slugify')
-const { errorHandler } = require('../helpers/dbErrorHandler')
+import slugify from 'slugify'
+import Category from '../models/category.js'
+import { errorHandler } from '../helpers/dbErrorHandler.js'
 
-exports.create = (req, res) => {
+export const create = (req, res) => {
 
     const { name } = req.body
     const slug = slugify(name).toLowerCase()
@@ -22,7 +22,7 @@ exports.create = (req, res) => {
     })
 }
 
-exports.list = (_req, res) => {
+export const list = (_req, res) => {
 
     Category.find({}).exec((err, data) => {
 
@@ -34,7 +34,7 @@ exports.list = (_req, res) => {
     })
 }
 
-exports.read = (req, res) => {
+export const read = (req, res) => {
 
     const slug = req?.params?.slug?.toLowerCase()
 
@@ -48,7 +48,7 @@ exports.read = (req, res) => {
     })
 }
 
-exports.remove = (req, res) => {
+export const remove = (req, res) => {
 
     const slug = req?.params?.slug?.toLowerCase()
 

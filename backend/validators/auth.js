@@ -1,6 +1,6 @@
-const { check } = require('express-validator')
+import { check } from 'express-validator'
 
-exports.userSignupValidator = [
+export const userSignupValidator = [
     check('name')
         .not()
         .isEmpty()
@@ -13,7 +13,7 @@ exports.userSignupValidator = [
         .withMessage("Password must be at leaset 6 characters long"),
 ]
 
-exports.userSigninValidator = [
+export const userSigninValidator = [
     check('email')
         .isEmail()
         .withMessage("Must be a valid email"),

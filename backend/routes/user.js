@@ -1,8 +1,9 @@
-const express = require('express')
+import express from 'express'
+import { requireSignin, userMiddleware } from '../controllers/auth.js'
+import { removeUserPasswordFromProfile } from '../controllers/user.js'
+
 const router = express.Router()
-const { requireSignin, userMiddleware } = require('../controllers/auth')
-const { removeUserPasswordFromProfile } = require('../controllers/user')
 
 router.get('/profile', requireSignin, userMiddleware, removeUserPasswordFromProfile)
 
-module.exports = router
+export default router

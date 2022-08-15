@@ -1,16 +1,16 @@
-const mongoose = require('mongoose')
-const express = require('express')
-const morgan = require('morgan')
-// const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const cors = require('cors')
-const blogRoutes = require('./routes/blog')
-const authRoutes = require('./routes/auth')
-const userRoutes = require('./routes/user')
-const categoryRoutes = require('./routes/category')
-const tagRoutes = require('./routes/tag')
+import mongoose from 'mongoose'
+import express from 'express'
+import morgan from 'morgan'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import blogRoutes from './routes/blog.js'
+import authRoutes from './routes/auth.js'
+import userRoutes from './routes/user.js'
+import categoryRoutes from './routes/category.js'
+import tagRoutes from './routes/tag.js'
+import dotenv from 'dotenv'
 
-require('dotenv').config()
+dotenv.config()
 
 // app
 const app = express()
