@@ -8,7 +8,6 @@ import moment from 'moment';
 import Card from '../../components/blog/Card';
 
 const Tag = ({ tag, blogs, query }) => {
-    console.log('~ tag', tag)
     const head = () => (
         <Head>
             <title>

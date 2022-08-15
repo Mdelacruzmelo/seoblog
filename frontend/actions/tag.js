@@ -35,7 +35,7 @@ export const singleTag = slug => {
         .then(response => {
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const removeTag = (slug, token) => {

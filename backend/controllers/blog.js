@@ -72,7 +72,6 @@ export const create = (req, res) => {
 
         blog.save((err, result) => {
             if (err) {
-                console.log('~ err', err)
                 return res.status(400).json({
                     error: errorHandler(err)
                 });
