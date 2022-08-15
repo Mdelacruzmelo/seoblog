@@ -50,7 +50,7 @@ const ProfileUpdate = () => {
     const handleChange = name => e => {
         const value = name === 'photo' ? e.target.files[0] : e.target.value;
         let userFormData = new FormData();
-        userFormData.set(name, value);
+        userFormData.append(name, value);
         setValues({ ...values, [name]: value, userData: userFormData, error: false, success: false });
     };
 

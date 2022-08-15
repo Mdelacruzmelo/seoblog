@@ -108,7 +108,7 @@ const BlogUpdate = ({ router }) => {
             all.splice(clickedCategory, 1);
         }
         setChecked(all);
-        formData.set('categories', all);
+        formData.append('categories', all);
     };
 
     const handleTagsToggle = t => () => {
@@ -123,7 +123,7 @@ const BlogUpdate = ({ router }) => {
             all.splice(clickedTag, 1);
         }
         setCheckedTag(all);
-        formData.set('tags', all);
+        formData.append('tags', all);
     };
 
     const findOutCategory = c => {
@@ -180,13 +180,13 @@ const BlogUpdate = ({ router }) => {
 
     const handleChange = name => e => {
         const value = name === 'photo' ? e.target.files[0] : e.target.value;
-        formData.set(name, value);
+        formData.append(name, value);
         setValues({ ...values, [name]: value, formData, error: '' });
     };
 
     const handleBody = e => {
         setBody(e);
-        formData.set('body', e);
+        formData.append('body', e);
     };
 
     const editBlog = e => {

@@ -78,6 +78,7 @@ const CreateBlog = ({ router }) => {
     const publishBlog = e => {
         e.preventDefault();
         createBlog(formData, token).then(data => {
+            console.log('~ data', data)
             if (!data || data.error) {
                 setValues({ ...values, error: data?.error });
             } else {
@@ -91,13 +92,13 @@ const CreateBlog = ({ router }) => {
 
     const handleChange = name => e => {
         const value = name === 'photo' ? e.target.files[0] : e.target.value;
-        formData.set(name, value);
+        formData.append(name, value);
         setValues({ ...values, [name]: value, formData, error: '' });
     };
 
     const handleBody = e => {
         setBody(e);
-        formData.set('body', e);
+        formData.append('body', e);
         if (typeof window !== 'undefined') {
             localStorage.setItem('blog', JSON.stringify(e));
         }
@@ -115,7 +116,7 @@ const CreateBlog = ({ router }) => {
             all.splice(clickedCategory, 1);
         }
         setChecked(all);
-        formData.set('categories', all);
+        formData.append('categories', all);
     };
 
     const handleTagsToggle = t => () => {
@@ -130,7 +131,7 @@ const CreateBlog = ({ router }) => {
             all.splice(clickedTag, 1);
         }
         setCheckedTag(all);
-        formData.set('tags', all);
+        formData.append('tags', all);
     };
 
     const showCategories = () => {

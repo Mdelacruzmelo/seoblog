@@ -52,13 +52,15 @@ export const create = (req, res) => {
         blog.excerpt = smartTrim(body, 320, ' ', ' ...');
         blog.slug = slugify(title).toLowerCase();
         blog.mtitle = `${title} | ${process.env.APP_NAME}`;
-        blog.mdesc = stripHtml(body.substring(0, 160));
-        blog.postedBy = req.user._id;
+        const blogCut = stripHtml(body.substring(0, 160));
+        blog.mdesc = blogCut.result
+        blog.postedBy = req.auth._id;
         // categories and tags
         let arrayOfCategories = categories && categories.split(',');
         let arrayOfTags = tags && tags.split(',');
 
-        if (files.photo) {
+        /* if (files.photo) {
+            console.log('~ files.photo.path', files.photo.path)
             if (files.photo.size > 10000000) {
                 return res.status(400).json({
                     error: 'Image should be less then 1mb in size'
@@ -66,10 +68,11 @@ export const create = (req, res) => {
             }
             blog.photo.data = fs.readFileSync(files.photo.path);
             blog.photo.contentType = files.photo.type;
-        }
+        } */
 
         blog.save((err, result) => {
             if (err) {
+                console.log('~ err', err)
                 return res.status(400).json({
                     error: errorHandler(err)
                 });
