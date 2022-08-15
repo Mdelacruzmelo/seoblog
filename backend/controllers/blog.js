@@ -59,16 +59,16 @@ export const create = (req, res) => {
         let arrayOfCategories = categories && categories.split(',');
         let arrayOfTags = tags && tags.split(',');
 
-        /* if (files.photo) {
-            console.log('~ files.photo.path', files.photo.path)
+        if (files.photo) {
+            blog.photo = {}
             if (files.photo.size > 10000000) {
                 return res.status(400).json({
                     error: 'Image should be less then 1mb in size'
                 });
             }
-            blog.photo.data = fs.readFileSync(files.photo.path);
-            blog.photo.contentType = files.photo.type;
-        } */
+            blog.photo.data = fs.readFileSync(files.photo.filepath);
+            blog.photo.contentType = files.photo.mimetype;
+        }
 
         blog.save((err, result) => {
             if (err) {
