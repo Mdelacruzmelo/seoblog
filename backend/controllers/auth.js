@@ -1,13 +1,14 @@
-const User = require('../models/user');
-const shortId = require('shortid');
-const expressJwt = require('express-jwt');
-const jwt = require('jsonwebtoken');
+import User from '../models/user.js'
+import shortId from 'shortid'
+import expressJwt from 'express-jwt'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
-require('dotenv').config()
+dotenv.config()
 
 const { expressjwt } = expressJwt
 
-exports.signup = (req, res) => {
+export const signup = (req, res) => {
     const { name, email, password } = req.body
 
     User.findOne({ email })
@@ -34,7 +35,7 @@ exports.signup = (req, res) => {
 
 }
 
-exports.signin = (req, res) => {
+export const signin = (req, res) => {
 
     const { email, password } = req.body
 
@@ -74,18 +75,18 @@ exports.signin = (req, res) => {
 
 }
 
-exports.signout = (_req, res) => {
+export const signout = (_req, res) => {
     res.clearCookie('token')
     res.json({ message: 'Signout success' })
 }
 
-exports.requireSignin = expressjwt({
+export const requireSignin = expressjwt({
     secret: process.env.JWT_SECRET,
     algorithms: ["HS256"],
     userProperty: "auth"
 });
 
-exports.userMiddleware = (req, res, next) => {
+export const userMiddleware = (req, res, next) => {
     const authUserId = req.auth._id
     User.findById({ _id: authUserId }).exec((err, user) => {
         if (err || !user) {
@@ -96,7 +97,7 @@ exports.userMiddleware = (req, res, next) => {
     })
 }
 
-exports.adminMiddleware = (req, res, next) => {
+export const adminMiddleware = (req, res, next) => {
 
     const adminUserId = req.auth._id
 
@@ -114,3 +115,21 @@ exports.adminMiddleware = (req, res, next) => {
         next()
     })
 }
+
+export const canUpdateDeleteBlog = (req, res, next) => {
+    const slug = req.params.slug.toLowerCase();
+    Blog.findOne({ slug }).exec((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            });
+        }
+        let authorizedUser = data.postedBy._id.toString() === req.profile._id.toString();
+        if (!authorizedUser) {
+            return res.status(400).json({
+                error: 'You are not authorized'
+            });
+        }
+        next();
+    });
+};

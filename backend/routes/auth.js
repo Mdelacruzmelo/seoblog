@@ -1,10 +1,12 @@
-const express = require('express')
-const router = express.Router()
-const { signup, signin, signout, requireSignin } = require('../controllers/auth')
+import express from 'express'
+import { signup, signin, signout, requireSignin } from '../controllers/auth.js'
 
 // Validators
-const { runValidation } = require('../validators')
-const { userSignupValidator, userSigninValidator } = require('../validators/auth')
+import { runValidation } from '../validators/index.js'
+import { userSignupValidator, userSigninValidator } from '../validators/auth.js'
+
+const router = express.Router()
+
 
 router.post('/signup', userSignupValidator, runValidation, signup)
 router.post('/signin', userSigninValidator, runValidation, signin)
@@ -14,4 +16,4 @@ router.get('/secret', requireSignin, (req, res) => {
     res.json({ user: req.auth })
 })
 
-module.exports = router
+export default router
