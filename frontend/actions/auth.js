@@ -51,9 +51,8 @@ export const signout = (next) => {
 }
 
 // Set Localstorage
-export const setLocalStorage = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value))
-
+export const setLocalStorage = (key, value, stringify) => {
+    localStorage.setItem(key, (stringify ? JSON.stringify(value) : value))
 }
 
 // Remove Localstorage
@@ -65,7 +64,7 @@ export const removeLocalStorage = (key) => {
 export const authenticate = (data, next) => {
     // setCookie('token', data.token)
     setLocalStorage('token', data.token)
-    setLocalStorage('user', data.user)
+    setLocalStorage('user', data.user, true)
     if (next) next()
     else console.error("No next method given")
 }

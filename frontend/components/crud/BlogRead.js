@@ -19,7 +19,7 @@ const BlogRead = ({ username }) => {
     const loadBlogs = () => {
         list(username).then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 setBlogs(data);
             }
@@ -29,7 +29,7 @@ const BlogRead = ({ username }) => {
     const deleteBlog = slug => {
         removeBlog(slug, token).then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 setMessage(data.message);
                 loadBlogs();

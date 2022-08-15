@@ -25,7 +25,7 @@ export const createBlog = (blog, token) => {
             handleResponse(response);
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const listBlogsWithCategoriesAndTags = (skip, limit) => {
@@ -44,7 +44,7 @@ export const listBlogsWithCategoriesAndTags = (skip, limit) => {
         .then(response => {
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const singleBlog = (slug = undefined) => {
@@ -54,7 +54,7 @@ export const singleBlog = (slug = undefined) => {
         .then(response => {
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const listRelated = blog => {
@@ -69,7 +69,7 @@ export const listRelated = blog => {
         .then(response => {
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const list = username => {
@@ -87,7 +87,7 @@ export const list = username => {
         .then(response => {
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const removeBlog = (slug, token) => {
@@ -111,7 +111,7 @@ export const removeBlog = (slug, token) => {
             handleResponse(response);
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const updateBlog = (blog, token, slug) => {
@@ -135,18 +135,16 @@ export const updateBlog = (blog, token, slug) => {
             handleResponse(response);
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const listSearch = params => {
-    console.log('search params', params);
     let query = queryString.stringify(params);
-    console.log('query params', query);
     return fetch(`${API}/blogs/search?${query}`, {
         method: 'GET'
     })
         .then(response => {
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };

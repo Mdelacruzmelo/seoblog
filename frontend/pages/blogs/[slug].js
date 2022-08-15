@@ -15,7 +15,7 @@ const SingleBlog = ({ blog, query }) => {
     const loadRelated = () => {
         listRelated({ blog }).then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 setRelated(data);
             }
@@ -138,9 +138,8 @@ const SingleBlog = ({ blog, query }) => {
 SingleBlog.getInitialProps = ({ query }) => {
     return singleBlog(query.slug).then(data => {
         if (data.error) {
-            console.log(data.error);
+            console.error(data.error);
         } else {
-            // console.log('GET INITIAL PROPS IN SINGLE BLOG', data);
             return { blog: data, query };
         }
     });

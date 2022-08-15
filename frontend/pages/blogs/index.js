@@ -41,7 +41,7 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogsLimit, blogSkip, rout
         let toSkip = skip + limit;
         listBlogsWithCategoriesAndTags(toSkip, limit).then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 setLoadedBlogs([...loadedBlogs, ...data.blogs]);
                 setSize(data.size);
@@ -132,7 +132,7 @@ Blogs.getInitialProps = () => {
     let limit = 2;
     return listBlogsWithCategoriesAndTags(skip, limit).then(data => {
         if (data.error) {
-            console.log(data.error);
+            console.error(data.error);
         } else {
             return {
                 blogs: data.blogs,

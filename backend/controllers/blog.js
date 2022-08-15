@@ -273,7 +273,7 @@ export const photo = (req, res) => {
 };
 
 export const listRelated = (req, res) => {
-    // console.log(req.body.blog);
+
     let limit = req.body.limit ? parseInt(req.body.limit) : 3;
     const { _id, categories } = req.body.blog;
 
@@ -293,7 +293,7 @@ export const listRelated = (req, res) => {
 
 //
 export const listSearch = (req, res) => {
-    console.log(req.query);
+
     const { search } = req.query;
     if (search) {
         Blog.find(

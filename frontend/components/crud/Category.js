@@ -27,7 +27,7 @@ const Category = ({ token }) => {
     const loadCategories = () => {
         getCategories().then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 setValues({ ...values, categories: data });
             }
@@ -57,10 +57,9 @@ const Category = ({ token }) => {
     };
 
     const deleteCategory = slug => {
-        // console.log('delete', slug);
         removeCategory(slug, token).then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 setValues({
                     ...values,
@@ -76,7 +75,6 @@ const Category = ({ token }) => {
 
     const clickSubmit = e => {
         e.preventDefault();
-        // console.log('create category', name);
         create({ name }, token).then(data => {
             if (!data || data.error) {
                 setValues({

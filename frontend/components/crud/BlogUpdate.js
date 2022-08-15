@@ -49,7 +49,7 @@ const BlogUpdate = ({ router }) => {
         if (router.query.slug) {
             singleBlog(router.query.slug).then(data => {
                 if (data.error) {
-                    console.log(data.error);
+                    console.error(data.error);
                 } else {
                     setValues({ ...values, title: data.title });
                     setBody(data.body);
@@ -107,7 +107,6 @@ const BlogUpdate = ({ router }) => {
         } else {
             all.splice(clickedCategory, 1);
         }
-        console.log(all);
         setChecked(all);
         formData.set('categories', all);
     };
@@ -123,7 +122,6 @@ const BlogUpdate = ({ router }) => {
         } else {
             all.splice(clickedTag, 1);
         }
-        console.log(all);
         setCheckedTag(all);
         formData.set('tags', all);
     };
@@ -181,7 +179,6 @@ const BlogUpdate = ({ router }) => {
     };
 
     const handleChange = name => e => {
-        // console.log(e.target.value);
         const value = name === 'photo' ? e.target.files[0] : e.target.value;
         formData.set(name, value);
         setValues({ ...values, [name]: value, formData, error: '' });

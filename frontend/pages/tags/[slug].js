@@ -55,7 +55,7 @@ const Tag = ({ tag, blogs, query }) => {
 Tag.getInitialProps = ({ query }) => {
     return singleTag(query.slug).then(data => {
         if (data.error) {
-            console.log(data.error);
+            console.error(data.error);
         } else {
             return { tag: data.tag, blogs: data.blogs, query };
         }

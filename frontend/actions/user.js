@@ -12,7 +12,7 @@ export const userPublicProfile = username => {
         .then(response => {
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const getProfile = token => {
@@ -26,7 +26,7 @@ export const getProfile = token => {
         .then(response => {
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };
 
 export const update = (token, user) => {
@@ -42,5 +42,5 @@ export const update = (token, user) => {
             handleResponse(response);
             return response.json();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 };

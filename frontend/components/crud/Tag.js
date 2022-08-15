@@ -26,7 +26,7 @@ const Tag = ({ token }) => {
     const loadTags = () => {
         getTags().then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 setValues({ ...values, tags: data });
             }
@@ -58,7 +58,7 @@ const Tag = ({ token }) => {
     const deleteTag = slug => {
         removeTag(slug, token).then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.error(data.error);
             } else {
                 setValues({
                     ...values,
@@ -74,7 +74,6 @@ const Tag = ({ token }) => {
 
     const clickSubmit = e => {
         e.preventDefault();
-        // console.log('create tag', name);
         create({ name }, token).then(data => {
             if (!data || data.error) {
                 setValues({

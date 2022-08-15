@@ -55,7 +55,7 @@ const Category = ({ category, blogs, query }) => {
 Category.getInitialProps = ({ query }) => {
     return singleCategory(query.slug).then(data => {
         if (data.error) {
-            console.log(data.error);
+            console.error(data.error);
         } else {
             return { category: data.category, blogs: data.blogs, query };
         }

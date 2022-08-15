@@ -15,7 +15,6 @@ export const getCategories = () => {
 }
 
 export const create = (category, token) => {
-    console.log('~ token', token)
     return fetch(`${API}/category`, {
         method: 'post',
         headers: {
