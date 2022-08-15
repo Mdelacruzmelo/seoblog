@@ -8,15 +8,16 @@ import moment from 'moment';
 import Card from '../../components/blog/Card';
 
 const Tag = ({ tag, blogs, query }) => {
+    console.log('~ tag', tag)
     const head = () => (
         <Head>
             <title>
-                {tag.name} | {APP_NAME}
+                {tag?.name} | {APP_NAME}
             </title>
-            <meta name="description" content={`Best programming tutorials on ${tag.name}`} />
+            <meta name="description" content={`Best programming tutorials on ${tag?.name}`} />
             <link rel="canonical" href={`${DOMAIN}/categories/${query.slug}`} />
-            <meta property="og:title" content={`${tag.name}| ${APP_NAME}`} />
-            <meta property="og:description" content={`Best programming tutorials on ${tag.name}`} />
+            <meta property="og:title" content={`${tag?.name}| ${APP_NAME}`} />
+            <meta property="og:description" content={`Best programming tutorials on ${tag?.name}`} />
             <meta property="og:type" content="webiste" />
             <meta property="og:url" content={`${DOMAIN}/categories/${query.slug}`} />
             <meta property="og:site_name" content={`${APP_NAME}`} />
@@ -36,8 +37,8 @@ const Tag = ({ tag, blogs, query }) => {
                     <div className="container-fluid text-center">
                         <header>
                             <div className="col-md-12 pt-3">
-                                <h1 className="display-4 font-weight-bold">{tag.name}</h1>
-                                {blogs.map((b, i) => (
+                                <h1 className="display-4 font-weight-bold">{tag?.name}</h1>
+                                {blogs && blogs.map((b, i) => (
                                     <div>
                                         <Card key={i} blog={b} />
                                         <hr />
